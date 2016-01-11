@@ -1,0 +1,34 @@
+{
+  "name": "myweishanli/yii2-gii",
+  "description": "Yii2 Gii Extension",
+  "keywords": [
+    "yii2",
+    "gii",
+    "extension"
+  ],
+  "homepage": "https://github.com/myweishanli/yii2-gii",
+  "type": "yii2-extension",
+  "license": "MIT",
+  "support": {
+    "source": "https://github.com/myweishanli/yii2-gii"
+  },
+  "authors": [
+    {
+      "name": "Shanli Wei",
+      "email": "myweishanli@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": ">=2.0.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "wsl\\gii\\": ""
+    }
+  },
+  "config": {
+    "process-timeout": 1800
+  }
+}
