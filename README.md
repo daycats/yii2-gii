@@ -63,7 +63,7 @@ http://{Your domain}/index.php?r=gii/model
 ```php
 <?php
 
-namespace app\models;
+namespace common\models;
 
 /**
  * This is the ActiveQuery class for [[User]].
@@ -97,9 +97,9 @@ class UserQuery extends \yii\db\ActiveQuery
     }*/
 
     /**
-     * Find by `user_id`
+     * Find by [[user_id]]
      *
-     * @param string $userId [[user_id]]
+     * @param integer $userId [[user_id]]
      * @return $this
      */
     public function findByUserId($userId)
@@ -107,51 +107,9 @@ class UserQuery extends \yii\db\ActiveQuery
         $this->andWhere(['[[user_id]]' => $userId]);
         return $this;
     }
-
+    
     /**
-     * Find by like `user_id`
-     *
-     * @param string $userId [[user_id]]
-     * @return $this
-     */
-    public function findByLikeUserId($userId)
-    {
-        $this->andWhere('[[user_id]] like :user_id', [
-            ':user_id' => '%' . $userId . '%',
-        ]);
-        return $this;
-    }
-
-    /**
-     * Find by like left `user_id`
-     *
-     * @param string $userId [[user_id]]
-     * @return $this
-     */
-    public function findByLeftLikeUserId($userId)
-    {
-        $this->andWhere('[[user_id]] like :user_id', [
-            ':user_id' => '%' . $userId,
-        ]);
-        return $this;
-    }
-
-    /**
-     * Find by like right `user_id`
-     *
-     * @param string $userId [[user_id]]
-     * @return $this
-     */
-    public function findByRightLikeUserId($userId)
-    {
-        $this->andWhere('[[user_id]] like :user_id', [
-            ':user_id' => $userId . '%',
-        ]);
-        return $this;
-    }
-
-    /**
-     * Find by `nickname`
+     * Find by [[nickname]]
      *
      * @param string $nickname [[nickname]]
      * @return $this
@@ -161,9 +119,9 @@ class UserQuery extends \yii\db\ActiveQuery
         $this->andWhere(['[[nickname]]' => $nickname]);
         return $this;
     }
-
+    
     /**
-     * Find by like `nickname`
+     * Find by like [[nickname]]
      *
      * @param string $nickname [[nickname]]
      * @return $this
@@ -177,7 +135,7 @@ class UserQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * Find by like left `nickname`
+     * Find by like left [[nickname]]
      *
      * @param string $nickname [[nickname]]
      * @return $this
@@ -191,7 +149,7 @@ class UserQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * Find by like right `nickname`
+     * Find by like right [[nickname]]
      *
      * @param string $nickname [[nickname]]
      * @return $this
@@ -203,11 +161,11 @@ class UserQuery extends \yii\db\ActiveQuery
         ]);
         return $this;
     }
-
+    
     /**
-     * Find by `age`
+     * Find by [[age]]
      *
-     * @param string $age [[age]]
+     * @param integer $age [[age]]
      * @return $this
      */
     public function findByAge($age)
@@ -215,49 +173,7 @@ class UserQuery extends \yii\db\ActiveQuery
         $this->andWhere(['[[age]]' => $age]);
         return $this;
     }
-
-    /**
-     * Find by like `age`
-     *
-     * @param string $age [[age]]
-     * @return $this
-     */
-    public function findByLikeAge($age)
-    {
-        $this->andWhere('[[age]] like :age', [
-            ':age' => '%' . $age . '%',
-        ]);
-        return $this;
-    }
-
-    /**
-     * Find by like left `age`
-     *
-     * @param string $age [[age]]
-     * @return $this
-     */
-    public function findByLeftLikeAge($age)
-    {
-        $this->andWhere('[[age]] like :age', [
-            ':age' => '%' . $age,
-        ]);
-        return $this;
-    }
-
-    /**
-     * Find by like right `age`
-     *
-     * @param string $age [[age]]
-     * @return $this
-     */
-    public function findByRightLikeAge($age)
-    {
-        $this->andWhere('[[age]] like :age', [
-            ':age' => $age . '%',
-        ]);
-        return $this;
-    }
-
+    
     /**
      * @inheritdoc
      * @return User[]|array
@@ -281,6 +197,10 @@ class UserQuery extends \yii\db\ActiveQuery
 
 更新日志
 ------------
+
+### Version Dev Master
+
+- 优化字段类型
 
 ### Version 1.0.0 (2016.1.11)
 
