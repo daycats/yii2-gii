@@ -24,7 +24,7 @@ use Yii;
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
  *
 <?php foreach ($tableSchema->columns as $column): ?>
- * @property <?= "{$column->phpType} \${$column->name}\n" ?>
+ * @property <?= $column->type == 'integer' ? 'integer' : $column->phpType ?> $<?= $column->name . "\n" ?>
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
  *

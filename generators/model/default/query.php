@@ -54,9 +54,9 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
 <?php foreach ($tableSchema->columns as $column): ?>
 
     /**
-     * Find by `<?= $column->name?>`
+     * Find by [[<?= $column->name?>]]
      *
-     * @param <?= "{$column->phpType} \$"?><?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
+     * @param <?= $column->type == 'integer' ? 'integer' : $column->phpType ?> $<?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
      * @return $this
      */
     public function findBy<?= 'condition' == $column->name ? Inflector::camelize('My ' . $column->name) : Inflector::camelize($column->name)?>($<?=Inflector::variablize($column->name)?>)
@@ -64,10 +64,10 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
         $this->andWhere(['[[<?=$column->name?>]]' => $<?=Inflector::variablize($column->name)?>]);
         return $this;
     }
-    <?php if('string' == $column->phpType):?>
+    <?php if('string' == $column->phpType && $column->type != 'integer'): ?>
 
     /**
-     * Find by like `<?= $column->name?>`
+     * Find by like [[<?= $column->name?>]]
      *
      * @param <?= "{$column->phpType} \$"?><?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
      * @return $this
@@ -81,7 +81,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
     }
 
     /**
-     * Find by like left `<?= $column->name?>`
+     * Find by like left [[<?= $column->name?>]]
      *
      * @param <?= "{$column->phpType} \$"?><?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
      * @return $this
@@ -95,7 +95,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
     }
 
     /**
-     * Find by like right `<?= $column->name?>`
+     * Find by like right [[<?= $column->name?>]]
      *
      * @param <?= "{$column->phpType} \$"?><?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
      * @return $this
