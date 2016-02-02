@@ -28,86 +28,110 @@ namespace <?= $generator->queryNs ?>;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\') . "\n" ?>
 {
-    /*public function inactive()
+<?php if (isset($tableSchema->columns['status'])) :?>
+    /**
+     * 禁用
+     */
+    public function inactive()
     {
-        $this->andWhere('[[status]]=0');
+        $this->andWhere([
+            <?= $modelFullClassName ?>::tableName() . '.[[status]]' => <?= $modelFullClassName ?>::STATUS_INACTIVE,
+        ]);
         return $this;
     }
 
+    /**
+     * 启用
+     */
     public function active()
     {
-        $this->andWhere('[[status]]=1');
+        $this->andWhere([
+            <?= $modelFullClassName ?>::tableName() . '.[[status]]' => <?= $modelFullClassName ?>::STATUS_ACTIVE,
+        ]);
         return $this;
     }
 
+    /**
+     * 删除
+     */
     public function delete()
     {
-        $this->andWhere('[[status]]=2');
+        $this->andWhere([
+            <?= $modelFullClassName ?>::tableName() . '.[[status]]' => <?= $modelFullClassName ?>::STATUS_DELETE,
+        ]);
         return $this;
     }
 
+    /**
+     * 正常
+     */
     public function normal()
     {
-        $this->andWhere('[[status]]=0 or [[status]]=1');
+        $this->andWhere([
+            'IN', <?= $modelFullClassName ?>::tableName() . '.[[status]]', [<?= $modelFullClassName ?>::STATUS_INACTIVE, <?= $modelFullClassName ?>::STATUS_ACTIVE],
+        ]);
         return $this;
-    }*/
+    }
+<?php endif ?>
 <?php foreach ($tableSchema->columns as $column): ?>
 
     /**
-     * Find by [[<?= $column->name?>]]
+     * Find by `<?= $column->name?>`
      *
-     * @param <?= $column->type == 'integer' ? 'integer' : $column->phpType ?> $<?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
+     * @param <?= "{$column->phpType} \$"?><?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
      * @return $this
      */
     public function findBy<?= 'condition' == $column->name ? Inflector::camelize('My ' . $column->name) : Inflector::camelize($column->name)?>($<?=Inflector::variablize($column->name)?>)
     {
-        $this->andWhere(['[[<?=$column->name?>]]' => $<?=Inflector::variablize($column->name)?>]);
+        $this->andWhere([
+            <?= $modelFullClassName ?>::tableName() . '.[[<?= $column->name ?>]]' => $<?= Inflector::variablize($column->name) ?>,
+        ]);
         return $this;
     }
-    <?php if('string' == $column->phpType && $column->type != 'integer'): ?>
+<?php if('string' == $column->phpType):?>
 
     /**
-     * Find by like [[<?= $column->name?>]]
+     * Find by like `<?= $column->name?>`
      *
      * @param <?= "{$column->phpType} \$"?><?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
      * @return $this
      */
     public function findByLike<?= 'condition' == $column->name ? Inflector::camelize('My ' . $column->name) : Inflector::camelize($column->name)?>($<?=Inflector::variablize($column->name)?>)
     {
-        $this->andWhere('[[<?=$column->name?>]] like :<?=$column->name?>', [
-            ':<?=$column->name?>' => '%' . $<?=Inflector::variablize($column->name)?> . '%',
+        $this->andWhere([
+            'like', <?= $modelFullClassName ?>::tableName() . '.[[<?= $column->name ?>]]', $<?= Inflector::variablize($column->name) ?>,
         ]);
         return $this;
     }
 
     /**
-     * Find by like left [[<?= $column->name?>]]
+     * Find by like left `<?= $column->name?>`
      *
      * @param <?= "{$column->phpType} \$"?><?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
      * @return $this
      */
     public function findByLeftLike<?= 'condition' == $column->name ? Inflector::camelize('My ' . $column->name) : Inflector::camelize($column->name)?>($<?=Inflector::variablize($column->name)?>)
     {
-        $this->andWhere('[[<?=$column->name?>]] like :<?=$column->name?>', [
-            ':<?=$column->name?>' => '%' . $<?=Inflector::variablize($column->name)?>,
+        $this->andWhere([
+            'like', <?= $modelFullClassName ?>::tableName() . '.[[<?= $column->name ?>]]', '%' . $<?= Inflector::variablize($column->name) ?>, false
         ]);
         return $this;
     }
 
     /**
-     * Find by like right [[<?= $column->name?>]]
+     * Find by like right `<?= $column->name?>`
      *
      * @param <?= "{$column->phpType} \$"?><?=Inflector::variablize($column->name)?> [[<?= $column->name?>]]
      * @return $this
      */
     public function findByRightLike<?= 'condition' == $column->name ? Inflector::camelize('My ' . $column->name) : Inflector::camelize($column->name)?>($<?=Inflector::variablize($column->name)?>)
     {
-        $this->andWhere('[[<?=$column->name?>]] like :<?=$column->name?>', [
-            ':<?=$column->name?>' => $<?=Inflector::variablize($column->name)?> . '%',
+        $this->andWhere([
+            'like', <?= $modelFullClassName ?>::tableName() . '.[[<?= $column->name ?>]]', $<?= Inflector::variablize($column->name) ?> . '%', false
         ]);
         return $this;
     }
-    <?php endif;?>
+<?php endif;?>
 <?php endforeach; ?>
 
     /**

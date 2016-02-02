@@ -24,7 +24,7 @@ use Yii;
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
  *
 <?php foreach ($tableSchema->columns as $column): ?>
- * @property <?= $column->type == 'integer' ? 'integer' : $column->phpType ?> $<?= $column->name . "\n" ?>
+ * @property <?= "{$column->phpType} \${$column->name}\n" ?>
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
  *
@@ -35,6 +35,21 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+<?php if (isset($tableSchema->columns['status'])) :?>
+    /**
+     * 状态 禁用
+     */
+    const STATUS_INACTIVE = 0;
+    /**
+     * 状态 启用
+     */
+    const STATUS_ACTIVE = 1;
+    /**
+     * 状态 删除
+     */
+    const STATUS_DELETE = 2;
+
+<?php endif ?>
     /**
      * @inheritdoc
      */

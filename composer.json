@@ -21,7 +21,8 @@
   "minimum-stability": "stable",
   "require": {
     "php": ">=5.4.0",
-    "yiisoft/yii2": ">=2.0.6"
+    "yiisoft/yii2": ">=2.0.6",
+    "riimu/kit-phpencoder": "^2.1"
   },
   "autoload": {
     "psr-4": {
