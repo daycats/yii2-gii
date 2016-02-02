@@ -344,7 +344,7 @@ class UserQuery extends \yii\db\ActiveQuery
 
 
 
-`common\models\UserForm.php`
+`common\models\UserForm.php`
 
 ``` php
 <?php
@@ -977,7 +977,17 @@ class UserController extends Controller
 
 **计划**
 
-​		- Yii2 ExtJs Rbac CRUD生成
+
+
+
+
+-Yii2 ExtJs Rbac CRUD生成
+
+
+
+
+
+
 
 
 
